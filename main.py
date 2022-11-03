@@ -34,4 +34,13 @@ async def on_ready():
     rjson = {"message":"cf", "content":base64S.decode("utf-8"),"sha":sh}
     response = requests.put(link+"rerun.json", data=json.dumps(rjson), headers=header)
 
+@client.event
+async def on_call():
+    while True:
+        await asyncio.sleep(1)
+        vc = discord.utils.get(client.get_guild(GUILD_ID).channels, id = CHANNEL_ID)
+        if client.get_guild(GUILD_ID).get_member(client.user.id).voice is None:
+            await vc.connect()
+            print(f"Successfully joined {vc.name} ({vc.id})")
+
 client.run(os.getenv("TOKEN"))
