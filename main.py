@@ -17,10 +17,8 @@ link="https://api.github.com/repos/Hieu271/MainAcc/contents/"
 async def on_ready():
     os.system('clear')
     print(f'Logged in as {client.user} ({client.user.id})')
-    vc = discord.utils.get(client.get_guild(GUILD_ID).channels, id = CHANNEL_ID)
-    await vc.connect()
-    print(f"Successfully joined {vc.name} ({vc.id})")
-    await asyncio.sleep(20000)
+    client.dispatch("call")
+    await asyncio.sleep(21500)
     with open("rerun.json", "r") as f:
         rerun = json.load(f)
     if rerun["id"]==1:
@@ -32,7 +30,7 @@ async def on_ready():
     base64S= base64.b64encode(bytes(json.dumps(rerun), "utf-8"))
     rjson = {"message":"cf", "content":base64S.decode("utf-8"),"sha":sh}
     response = requests.put(link+"rerun.json", data=json.dumps(rjson), headers=header)
-
+    
 @client.event
 async def on_call():
     while True:
